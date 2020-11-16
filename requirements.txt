@@ -1,7 +1,7 @@
 torch>=1.2
 torchvision
 numpy
-spatial-correlation-sampler>=0.2.1
+https://github.com/ClementPinard/Pytorch-Correlation-extension/archive/master.zip
 tensorboardX>=1.4
 imageio
 argparse

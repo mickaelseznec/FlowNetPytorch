@@ -188,7 +188,6 @@ def main():
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=args.milestones, gamma=0.5)
 
     for epoch in range(args.start_epoch, args.epochs):
-        scheduler.step()
 
         # train for one epoch
         train_loss, train_EPE = train(train_loader, model, optimizer, epoch, train_writer)
@@ -212,6 +211,8 @@ def main():
             'best_EPE': best_EPE,
             'div_flow': args.div_flow
         }, is_best, save_path)
+
+        scheduler.step()
 
 
 def train(train_loader, model, optimizer, epoch, train_writer):
