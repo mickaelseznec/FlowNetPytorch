@@ -13,6 +13,8 @@ from imageio import imread, imwrite
 import numpy as np
 from util import flow2rgb
 
+import flowpy
+
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__"))
 

@@ -42,7 +42,15 @@ def main():
 
     inputs = ['input']
     outputs = ['output']
-    dynamic_axes = {'input': {0: 'batch_size'}, 'output': {0:'batch_size'}}
+    dynamic_axes = {
+        'input': {
+            0: 'batch_size',
+            2: 'height',
+            3: 'width'},
+        'output': {
+            0:'batch_size'}
+    }
+
     out = torch.onnx.export(model,
                             input,
                             model_onnx_path,

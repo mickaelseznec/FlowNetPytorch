@@ -1,3 +1,5 @@
+import torch
+
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -47,12 +49,10 @@ def correlate(input1, input2):
     # collate dimensions 1 and 2 in order to be treated as a
     # regular 4D tensor
     b, ph, pw, h, w = out_corr.size()
-    out_corr = out_corr.view(b, ph * pw, h, w)/input1.size(1)
+    out_corr = out_corr.view(b, -1, h, w) * (1 / input1.size(1))
     return F.leaky_relu_(out_corr, 0.1)
 
 
-def crop_like(input, target):
-    if input.size()[2:] == target.size()[2:]:
-        return input
-    else:
-        return input[:, :, :target.size(2), :target.size(3)]
+@torch.jit.script
+def crop_like(input: torch.Tensor, target: torch.Tensor):
+    return input[:, :, :target.size(2), :target.size(3)]
